@@ -32,7 +32,7 @@ body {
   grid-template-rows: auto auto 1fr auto;
 }
 
-h1 {
+ h1 {
   text-align: center;
   background-color: #f4a226;
   font-family: "Monoton";
@@ -83,8 +83,8 @@ input {
   padding: 4rem 0;
 
   display: flex;
-  justify-content: space-between;
-  flex-direction: column;
+  justify-content: space-evenly;
+  flex-direction: row;
   gap: 3.2rem;
   align-items: center;
 }
@@ -112,6 +112,7 @@ input {
 
 .list li {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 1.2rem;
 }

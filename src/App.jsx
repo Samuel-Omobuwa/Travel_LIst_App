@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 export default function App() {
   const [items, setItem] = useState([]);
 
@@ -12,28 +11,49 @@ export default function App() {
     setItem((items) => items.filter((item) => item.id !== id));
   }
 
-  function handleItemToggle(id){
-    setItem((items) => items.map((item)=> item.id === id ?{...item, packed: !item.packed} : item))
+  function handleItemToggle(id) {
+    setItem((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
+    );
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <Logo />
       <Form onhandleAddItems={handleAddItems} />
-      <PackingList items={items} 
-      onToggleItem={handleItemToggle}
-      onDeleteItems={handleDeleteItems} />
-      <Stats />
+      <PackingList
+        items={items}
+        onToggleItem={handleItemToggle}
+        onDeleteItems={handleDeleteItems}
+      />
+      <Stats items={items} />
     </div>
   );
 }
 
 function Logo() {
-  return <h1>🌴Far Away 💼</h1>;
+  return (
+    <div>
+      <h1>🌴Far Away 💼</h1>
+      <h3
+        style={{
+          backgroundColor: "#f4a226",
+          textAlign: "center",
+          fontWeight: "900",
+          padding: "0px 0px 20px 0px",
+        }}
+      >
+        YOUR TRAVEL PACKING LIST{" "}
+      </h3>
+    </div>
+  );
 }
+
 function Form({ onhandleAddItems }) {
   const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState(3);
+  const [quantity, setQuantity] = useState(1);
 
   function handleItemSubmit(e) {
     e.preventDefault();
@@ -71,16 +91,33 @@ function PackingList({ items, onDeleteItems, onToggleItem }) {
   return (
     <div className="list">
       {items.map((item) => (
-        <Item item={item} key={item.id} onDeleteItems={onDeleteItems} onToggleItem={onToggleItem} />
+        <Item
+          item={item}
+          key={item.id}
+          onDeleteItems={onDeleteItems}
+          onToggleItem={onToggleItem}
+        />
       ))}
+
+      <div className="actions">
+        <select name="" id="">
+          <option value="input">Sort by the input order</option>
+          <option value="description">Sort by description </option>
+          <option value="packed">Sort by packed status</option>
+        </select>
+      </div>
     </div>
   );
 }
 
 function Item({ item, onDeleteItems, onToggleItem }) {
   return (
-    <li>
-      <input type="checkbox" value={item.packed} onChange={()=> onToggleItem(item.id)} />
+    <li className="">
+      <input
+        type="checkbox"
+        value={item.packed}
+        onChange={() => onToggleItem(item.id)}
+      />
       <span
         style={
           item.packed
@@ -90,15 +127,29 @@ function Item({ item, onDeleteItems, onToggleItem }) {
       >
         {item.quantity} {item.description}
       </span>
-      <button onClick={()=> onDeleteItems(item.id)}>❌</button>
+      <button onClick={() => onDeleteItems(item.id)}>❌</button>
     </li>
   );
 }
 
-function Stats() {
+function Stats({ items }) {
+  if (!items.length)
+    return (
+      <p className="stats">
+        <em> Start adding some items to your list 🚀</em>
+      </p>
+    );
+  const numItems = items.length;
+  const numPacked = items.filter((item) => item.packed).length;
+  const percentage = Math.round((numPacked / numItems) * 100);
+
   return (
     <footer className="stats">
-      <em>💼 You hav X items on your list, and you already packed X (X%) </em>
+      <em>
+        {percentage === 100
+          ? "You go everything! Ready to go ✈️"
+          : `  💼 You have ${numItems} items on your list, and you already packed ${numPacked} (${percentage}%) `}
+      </em>
     </footer>
   );
 }
