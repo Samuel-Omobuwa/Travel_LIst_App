@@ -8,7 +8,14 @@ export default function App() {
   const [items, setItem] = useState([]);
 
   function handleAddItems(item) {
-    setItem((items) => [...items, item]);
+
+    if (items.length < 10) {
+      setItem((items) => [...items, item])
+    } else{
+      alert("Maximum item limit has been reached")
+      return;
+    }
+    
   }
 
   function handleDeleteItems(id) {

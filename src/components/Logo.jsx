@@ -1,9 +1,10 @@
 export default function Logo() {
   return (
     <div>
-      <h1>🌴Far Away 💼</h1>
+      <h1>🌴Far Away💼</h1>
       <h3
         style={{
+          width: "100%",
           backgroundColor: "#f4a226",
           textAlign: "center",
           fontWeight: "900",

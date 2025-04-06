@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Item } from "./Item";
+import Item from "./Item";
 
 export default function PackingList({
   items,
@@ -21,9 +21,12 @@ export default function PackingList({
       .slice()
       .sort((a, b) => Number(a.packed) - Number(b.packed));
 
+          
+
   return (
     <div className="list">
-      {sortedItems.map((item) => (
+      {
+      sortedItems.map((item) => (
         <Item
           item={item}
           key={item.id}
